@@ -1,0 +1,49 @@
+name: Full-Stack Lab CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend-tests:
+    name: Backend Test Suites
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Test Library Catalog API
+        run: |
+          cd library-catalog-api/library-catalog-api
+          npm ci
+          npm test
+
+      - name: Test Access Control System
+        run: |
+          cd access-control-system/access-control-system
+          npm ci
+          npm test
+
+      - name: Test QC Inspection API
+        run: |
+          cd qc-inspection-api/qc-inspection-api
+          npm ci
+          npm test
+
+      - name: Test Relay Station
+        run: |
+          cd relay-station/relay-station
+          npm ci
+          npm test
