@@ -1,0 +1,6 @@
+node_modules
+coverage
+
+# Uploaded files shouldn't ship with the project, but keep the folder
+uploads/*
+!uploads/.gitkeep

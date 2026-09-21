@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Receiving Dock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="dock">
+      <header class="dock-header">
+        <h1>Receiving Dock</h1>
+        <p>Drop files here to add them to today&rsquo;s manifest.</p>
+      </header>
+
+      <section id="dropzone" class="dropzone">
+        <input type="file" id="file-input" multiple hidden />
+        <div class="dropzone-inner">
+          <p class="dropzone-title">Drop parcels here, or click to browse</p>
+          <p class="dropzone-note">
+            Accepted: images, PDF, text/CSV/Markdown, Office docs, ZIP &mdash; up to 10&nbsp;MB each, 5 per drop.
+          </p>
+        </div>
+      </section>
+
+      <div id="upload-progress" class="conveyor is-hidden">
+        <div class="conveyor-fill"></div>
+        <span class="conveyor-label" id="conveyor-label">Scanning parcels&hellip;</span>
+      </div>
+
+      <div id="upload-error" class="reject-slip is-hidden"></div>
+
+      <section class="manifest">
+        <div class="manifest-header">
+          <h2>Manifest</h2>
+          <span id="manifest-summary" class="manifest-summary">0 parcels &middot; 0 B</span>
+        </div>
+
+        <div id="manifest-empty" class="manifest-empty">No parcels received yet.</div>
+        <div id="manifest-grid" class="manifest-grid"></div>
+      </section>
+    </main>
+
+    <template id="parcel-template">
+      <article class="parcel">
+        <span class="parcel-stamp">RECEIVED</span>
+        <div class="parcel-punch"></div>
+        <div class="parcel-id mono"></div>
+        <div class="parcel-name"></div>
+        <div class="parcel-meta mono"></div>
+        <div class="parcel-barcode">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="parcel-actions">
+          <a class="btn btn-claim" download>Claim</a>
+          <button type="button" class="btn btn-discard">Discard</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Relay Station</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="station">
+      <header class="station-header">
+        <h1>Relay Station</h1>
+        <p>Two services, one signed line: the Dispatch Desk sends webhooks, the Receiving Post verifies and logs them.</p>
+      </header>
+
+      <div class="desks">
+        <!-- Dispatch Desk -->
+        <section class="desk">
+          <h2>Dispatch desk</h2>
+
+          <form id="event-form" class="panel-form">
+            <label>
+              Signal type
+              <select name="type" id="event-type"></select>
+            </label>
+            <label>
+              Payload (JSON)
+              <textarea name="payload" id="event-payload" rows="4" class="mono">{"orderId":"ORD-1001","total":42.5}</textarea>
+            </label>
+            <button type="submit" class="btn btn-primary">Send signal</button>
+          </form>
+
+          <h3>Relay lines</h3>
+          <div id="subscriptions-list" class="subs-list"></div>
+
+          <details class="add-line">
+            <summary>+ Patch in a new relay line</summary>
+            <form id="subscription-form" class="panel-form">
+              <label>
+                Label
+                <input type="text" name="label" placeholder="Fulfillment Center" />
+              </label>
+              <label>
+                Target URL
+                <input type="text" name="url" class="mono" value="http://localhost:4001/webhook" />
+              </label>
+              <fieldset id="event-checkboxes" class="event-checks"></fieldset>
+              <button type="submit" class="btn btn-secondary">Connect line</button>
+            </form>
+          </details>
+        </section>
+
+        <!-- Receiving Post -->
+        <section class="desk">
+          <h2>Receiving post</h2>
+          <p class="dial-label">Station condition</p>
+          <div class="dial" id="mode-dial">
+            <button type="button" class="dial-option" data-mode="reliable">Reliable</button>
+            <button type="button" class="dial-option" data-mode="flaky">Flaky line</button>
+            <button type="button" class="dial-option" data-mode="slow">Slow line</button>
+            <button type="button" class="dial-option" data-mode="offline">Offline</button>
+          </div>
+
+          <h3>Inbox</h3>
+          <div id="inbox-list" class="inbox-list">
+            <p class="empty-note">No signals received yet.</p>
+          </div>
+        </section>
+      </div>
+
+      <section class="log-panel">
+        <div class="log-header">
+          <h2>Relay log</h2>
+          <span id="log-summary" class="log-summary mono">0 deliveries</span>
+        </div>
+        <div id="log-ticker" class="log-ticker">
+          <p class="empty-note">Delivery attempts will appear here as they happen.</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

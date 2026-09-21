@@ -1,0 +1,408 @@
+:root {
+  --cell-bg: #202224;
+  --panel: #17181a;
+  --panel-edge: #322f2a;
+  --gauge-face: #ece4d0;
+  --needle: #1c1815;
+  --redline: #c1392b;
+  --amber: #d9a23a;
+  --green: #4a9d63;
+  --orange: #e0682c;
+  --text: #e7e2d4;
+  --text-dim: #9a9488;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--cell-bg);
+  background-image: radial-gradient(circle at 50% -10%, rgba(255, 255, 255, 0.05), transparent 55%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.012) 0 2px, transparent 2px 10px);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  min-height: 100vh;
+  padding: 36px 16px 60px;
+}
+
+.mono {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.cell {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+}
+
+.cell-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.cell-header h1 {
+  font-family: 'Teko', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0;
+  color: var(--orange);
+  text-transform: uppercase;
+}
+
+.cell-header p {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.cell-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-top: 3px solid var(--orange);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+}
+
+.panel h2 {
+  font-family: 'Teko', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin: 0 0 14px;
+}
+
+.panel h3 {
+  font-family: 'Teko', sans-serif;
+  font-size: 1.15rem;
+  color: var(--orange);
+  margin: 18px 0 8px;
+  text-transform: uppercase;
+}
+
+/* --- Controls -------------------------------------------------------- */
+
+#run-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#run-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.field-hint {
+  text-transform: none;
+  color: var(--text-dim);
+  font-size: 0.65rem;
+  letter-spacing: 0;
+}
+
+.field-row {
+  display: flex;
+  gap: 12px;
+}
+
+.field-row label {
+  flex: 1;
+}
+
+#run-form select,
+#run-form input {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  padding: 8px 9px;
+  border: 1px solid var(--panel-edge);
+  background: var(--gauge-face);
+  color: var(--needle);
+}
+
+#run-form select:focus,
+#run-form input:focus {
+  outline: 2px solid var(--orange);
+}
+
+.lever-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.lever {
+  flex: 1;
+  font-family: 'Teko', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 12px 0;
+  border: none;
+  cursor: pointer;
+}
+
+.lever-start {
+  background: var(--green);
+  color: #0f1a12;
+}
+
+.lever-start:hover {
+  filter: brightness(1.1);
+}
+
+.lever-stop {
+  background: var(--redline);
+  color: #200a07;
+}
+
+.lever-stop:disabled {
+  background: #4a3a36;
+  color: #8a7a74;
+  cursor: not-allowed;
+}
+
+.form-error {
+  color: var(--redline);
+  font-size: 0.76rem;
+  min-height: 1.2em;
+  margin: 8px 0 0;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.history-item {
+  background: #201f1c;
+  border-left: 3px solid var(--text-dim);
+  padding: 6px 8px;
+  font-size: 0.72rem;
+}
+
+.history-item.completed {
+  border-left-color: var(--green);
+}
+
+.history-item.aborted {
+  border-left-color: var(--amber);
+}
+
+.history-top {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text);
+}
+
+.history-meta {
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.empty-note {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  font-style: italic;
+  margin: 0;
+}
+
+/* --- Gauges ------------------------------------------------------------ */
+
+.gauge-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.gauge-block {
+  flex: 1;
+  text-align: center;
+}
+
+.gauge-svg {
+  width: 100%;
+  max-width: 200px;
+}
+
+.gauge-track {
+  fill: none;
+  stroke: #3a3733;
+  stroke-width: 12;
+}
+
+.gauge-face {
+  fill: #100f0d;
+  stroke: none;
+}
+
+.gauge-redline {
+  fill: none;
+  stroke: var(--redline);
+  stroke-width: 12;
+  opacity: 0.85;
+}
+
+.gauge-needle {
+  stroke: var(--orange);
+  stroke-width: 3;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 2px rgba(224, 104, 44, 0.6));
+  transform-origin: 100px 105px;
+  transition: transform 0.25s ease-out;
+}
+
+.gauge-hub {
+  fill: var(--orange);
+}
+
+.gauge-value {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 2px;
+}
+
+.gauge-label {
+  font-family: 'Teko', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.strip-row {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.strip-lamp {
+  flex: 1;
+  text-align: center;
+  padding: 6px 0;
+  font-family: 'Teko', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  background: #2a2723;
+  color: #5c574e;
+  border: 1px solid var(--panel-edge);
+}
+
+.strip-lamp.lit-idle {
+  background: #3a3f3c;
+  color: var(--text);
+}
+
+.strip-lamp.lit-running {
+  background: var(--green);
+  color: #0f1a12;
+}
+
+.strip-lamp.lit-redline {
+  background: var(--redline);
+  color: #200a07;
+}
+
+.trace {
+  width: 100%;
+  height: 180px;
+  background: #100f0d;
+  border: 1px solid var(--panel-edge);
+  display: block;
+}
+
+.trace-legend {
+  display: flex;
+  gap: 18px;
+  margin-top: 8px;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.dot-rps {
+  background: var(--orange);
+}
+
+.dot-lat {
+  background: #6aa8d8;
+}
+
+/* --- Printout ---------------------------------------------------------- */
+
+.printout-body {
+  font-size: 0.85rem;
+}
+
+.printout-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px 18px;
+}
+
+.printout-stat {
+  background: #201f1c;
+  padding: 8px 10px;
+  border-left: 3px solid var(--orange);
+}
+
+.printout-stat .label {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.printout-stat .value {
+  font-family: 'Teko', sans-serif;
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+@media (max-width: 800px) {
+  .cell-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gauge-row {
+    flex-wrap: wrap;
+  }
+
+  .gauge-block {
+    min-width: 140px;
+  }
+}

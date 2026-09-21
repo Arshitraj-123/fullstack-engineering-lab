@@ -1,0 +1,159 @@
+:root {
+  --counter: #cfcabf;
+  --card: #f6f0e2;
+  --card-edge: #e4dac2;
+  --ink: #2e2a22;
+  --ink-soft: #6b6353;
+  --brass: #a9822f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--counter);
+  transition: background-color 0.45s ease;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--ink);
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+}
+
+.station {
+  width: min(560px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.plaque {
+  background: var(--card);
+  border: 1px solid var(--card-edge);
+  box-shadow: 0 10px 0 rgba(46, 42, 34, 0.06), 0 3px 8px rgba(46, 42, 34, 0.2);
+  padding: 18px 34px 20px;
+  text-align: center;
+  transform: rotate(-0.6deg);
+}
+
+.plaque-eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.68rem;
+  color: var(--brass);
+  letter-spacing: 0.04em;
+}
+
+.plaque-name {
+  margin: 0 0 4px;
+  font-family: 'Source Serif 4', serif;
+  font-weight: 600;
+  font-size: 2rem;
+  color: var(--ink);
+}
+
+.plaque-code {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.swatch-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.swatch-card {
+  appearance: none;
+  border: 1px solid var(--card-edge);
+  background: var(--card);
+  padding: 0 0 10px;
+  width: 108px;
+  cursor: pointer;
+  box-shadow: 4px 6px 0 rgba(46, 42, 34, 0.08), 0 2px 5px rgba(46, 42, 34, 0.18);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.swatch-card:hover {
+  transform: translateY(-3px);
+}
+
+.swatch-card:active {
+  transform: translateY(0);
+}
+
+.swatch-card-active {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+.swatch-block {
+  display: block;
+  height: 78px;
+  background: var(--swatch-color);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.swatch-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px 0;
+}
+
+.swatch-name {
+  font-family: 'Source Serif 4', serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+
+.swatch-code {
+  font-size: 0.66rem;
+  color: var(--ink-soft);
+}
+
+.station-caption {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .plaque {
+    padding: 16px 20px 18px;
+  }
+
+  .plaque-name {
+    font-size: 1.6rem;
+  }
+
+  .swatch-card {
+    width: 92px;
+  }
+
+  .swatch-block {
+    height: 64px;
+  }
+}

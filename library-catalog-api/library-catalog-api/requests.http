@@ -1,0 +1,63 @@
+@baseUrl = http://localhost:3000
+
+### Health check
+GET {{baseUrl}}/api/health
+
+### List all books
+GET {{baseUrl}}/api/books
+
+### List books by an author
+GET {{baseUrl}}/api/books?author=Fowler
+
+### List only available books
+GET {{baseUrl}}/api/books?available=true
+
+### Get a single book (replace :id with a real id from the list above)
+GET {{baseUrl}}/api/books/:id
+
+### Create a book
+POST {{baseUrl}}/api/books
+Content-Type: application/json
+
+{
+  "title": "Refactoring",
+  "author": "Martin Fowler",
+  "isbn": "9780134757599",
+  "publishedYear": 2018
+}
+
+### Create a book with an invalid payload (expect 400)
+POST {{baseUrl}}/api/books
+Content-Type: application/json
+
+{
+  "title": ""
+}
+
+### Replace a book entirely (replace :id)
+PUT {{baseUrl}}/api/books/:id
+Content-Type: application/json
+
+{
+  "title": "Refactoring, 2nd Edition",
+  "author": "Martin Fowler",
+  "isbn": "9780134757599",
+  "publishedYear": 2018
+}
+
+### Partially update a book (replace :id)
+PATCH {{baseUrl}}/api/books/:id
+Content-Type: application/json
+
+{
+  "title": "Refactoring (Updated Title)"
+}
+
+### Check a book out (replace :id)
+POST {{baseUrl}}/api/books/:id/checkout
+
+### Return a book (replace :id)
+POST {{baseUrl}}/api/books/:id/return
+
+### Delete a book (replace :id)
+DELETE {{baseUrl}}/api/books/:id

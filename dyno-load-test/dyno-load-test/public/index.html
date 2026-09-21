@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dyno Test Cell</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="cell">
+      <header class="cell-header">
+        <h1>Dyno Test Cell</h1>
+        <p>Strap the API to the dynamometer and see how it holds up under load.</p>
+      </header>
+
+      <div class="cell-grid">
+        <!-- Control panel -->
+        <section class="panel controls">
+          <h2>Run setup</h2>
+          <form id="run-form">
+            <label>
+              Unit under test
+              <select name="targetKey" id="target-select"></select>
+            </label>
+            <div id="compute-n-row" class="field-row is-hidden">
+              <label>
+                Fibonacci depth (n)
+                <input type="number" name="computeN" value="30" min="10" max="35" class="mono" />
+              </label>
+            </div>
+            <div class="field-row">
+              <label>
+                Load (virtual users)
+                <input type="number" name="concurrency" value="20" min="1" max="300" class="mono" />
+              </label>
+              <label>
+                Duration (s)
+                <input type="number" name="durationSeconds" value="10" min="3" max="120" class="mono" />
+              </label>
+            </div>
+            <label>
+              Ramp-up (s) <span class="field-hint">0 = full load immediately</span>
+              <input type="number" name="rampUpSeconds" value="2" min="0" max="60" class="mono" />
+            </label>
+            <div class="lever-row">
+              <button type="submit" id="start-btn" class="lever lever-start">START RUN</button>
+              <button type="button" id="abort-btn" class="lever lever-stop" disabled>ABORT</button>
+            </div>
+          </form>
+          <p id="form-error" class="form-error"></p>
+
+          <h3>Run history</h3>
+          <div id="history-list" class="history-list">
+            <p class="empty-note">No runs yet.</p>
+          </div>
+        </section>
+
+        <!-- Gauge cluster -->
+        <section class="panel gauges">
+          <h2>Live gauges</h2>
+          <div class="gauge-row">
+            <div class="gauge-block">
+              <svg viewBox="0 0 200 120" class="gauge-svg">
+                <path d="M 10 108 A 90 90 0 0 1 190 108 L 190 118 L 10 118 Z" class="gauge-face" />
+                <path d="M 15 105 A 85 85 0 0 1 185 105" class="gauge-track" />
+                <path d="M 15 105 A 85 85 0 0 1 185 105" class="gauge-redline" id="rps-redline" />
+                <line x1="100" y1="105" x2="100" y2="30" class="gauge-needle" id="rps-needle" />
+                <circle cx="100" cy="105" r="6" class="gauge-hub" />
+              </svg>
+              <div class="gauge-value mono" id="rps-value">0</div>
+              <div class="gauge-label">REQ / SEC</div>
+            </div>
+            <div class="gauge-block">
+              <svg viewBox="0 0 200 120" class="gauge-svg">
+                <path d="M 10 108 A 90 90 0 0 1 190 108 L 190 118 L 10 118 Z" class="gauge-face" />
+                <path d="M 15 105 A 85 85 0 0 1 185 105" class="gauge-track" />
+                <path d="M 15 105 A 85 85 0 0 1 185 105" class="gauge-redline" id="latency-redline" />
+                <line x1="100" y1="105" x2="100" y2="30" class="gauge-needle" id="latency-needle" />
+                <circle cx="100" cy="105" r="6" class="gauge-hub" />
+              </svg>
+              <div class="gauge-value mono" id="latency-value">0</div>
+              <div class="gauge-label">P95 LATENCY (MS)</div>
+            </div>
+            <div class="gauge-block">
+              <svg viewBox="0 0 200 120" class="gauge-svg">
+                <path d="M 10 108 A 90 90 0 0 1 190 108 L 190 118 L 10 118 Z" class="gauge-face" />
+                <path d="M 15 105 A 85 85 0 0 1 185 105" class="gauge-track" />
+                <path d="M 15 105 A 85 85 0 0 1 185 105" class="gauge-redline" id="error-redline" />
+                <line x1="100" y1="105" x2="100" y2="30" class="gauge-needle" id="error-needle" />
+                <circle cx="100" cy="105" r="6" class="gauge-hub" />
+              </svg>
+              <div class="gauge-value mono" id="error-value">0%</div>
+              <div class="gauge-label">ERROR RATE</div>
+            </div>
+          </div>
+
+          <div class="strip-row">
+            <div class="strip-lamp" id="lamp-idle">IDLE</div>
+            <div class="strip-lamp" id="lamp-running">RUNNING</div>
+            <div class="strip-lamp" id="lamp-redline">REDLINE</div>
+          </div>
+
+          <canvas id="trace" class="trace" width="900" height="180"></canvas>
+          <div class="trace-legend">
+            <span><i class="dot dot-rps"></i> req/s</span>
+            <span><i class="dot dot-lat"></i> p95 latency (scaled)</span>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel printout">
+        <h2>Test strip</h2>
+        <div id="printout-body" class="printout-body">
+          <p class="empty-note">Run a test to print a summary strip here.</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

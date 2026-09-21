@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Access Control &mdash; Checkpoint</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="counter">
+      <header class="counter-header">
+        <h1>Checkpoint</h1>
+        <p>Present your credentials to be issued a clearance badge.</p>
+      </header>
+
+      <!-- AUTH VIEW: shown when signed out -->
+      <section id="auth-view" class="panel-row">
+        <div class="clipboard">
+          <div class="clipboard-clip" aria-hidden="true"></div>
+          <div class="clipboard-tabs" role="tablist">
+            <button type="button" class="tab is-active" data-tab="login" role="tab">Sign in</button>
+            <button type="button" class="tab" data-tab="register" role="tab">New badge request</button>
+          </div>
+
+          <form id="login-form" class="intake-form" data-form="login">
+            <label>
+              Email
+              <input type="email" name="email" autocomplete="username" required />
+            </label>
+            <label>
+              Password
+              <input type="password" name="password" autocomplete="current-password" required />
+            </label>
+            <button type="submit" class="btn btn-primary">Scan credentials</button>
+            <p class="hint">Seeded clearance for testing: <code>admin@accesscontrol.local</code> / <code>Admin123!</code></p>
+          </form>
+
+          <form id="register-form" class="intake-form is-hidden" data-form="register">
+            <label>
+              Full name
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label>
+              Password
+              <input type="password" name="password" autocomplete="new-password" required />
+              <span class="field-note">At least 8 characters, with letters and numbers.</span>
+            </label>
+            <button type="submit" class="btn btn-primary">Request badge</button>
+          </form>
+
+          <div id="auth-message" class="stamp-slot" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- BADGE VIEW: shown when signed in -->
+      <section id="badge-view" class="panel-row is-hidden">
+        <div class="badge-wrap">
+          <div class="badge" id="badge">
+            <div class="badge-band" id="badge-band">STANDARD CLEARANCE</div>
+            <div class="badge-body">
+              <div class="badge-photo" id="badge-photo">AA</div>
+              <div class="badge-fields">
+                <div class="badge-name" id="badge-name">&nbsp;</div>
+                <div class="badge-field"><span class="field-label">ID</span><span id="badge-id" class="mono field-value">&mdash;</span></div>
+                <div class="badge-field"><span class="field-label">EMAIL</span><span id="badge-email" class="mono field-value">&mdash;</span></div>
+                <div class="badge-field"><span class="field-label">ISSUED</span><span id="badge-issued" class="mono field-value">&mdash;</span></div>
+              </div>
+            </div>
+            <div class="badge-barcode" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <button type="button" id="logout-btn" class="btn btn-ghost">Return badge (sign out)</button>
+        </div>
+
+        <div id="roster-panel" class="roster is-hidden">
+          <h2>Security roster</h2>
+          <p class="roster-caption">Visible to admin clearance only.</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Clearance</th>
+                <th>Issued</th>
+              </tr>
+            </thead>
+            <tbody id="roster-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

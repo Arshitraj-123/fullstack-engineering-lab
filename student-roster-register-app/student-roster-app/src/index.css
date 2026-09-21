@@ -1,0 +1,247 @@
+:root {
+  --desk: #cbc3ac;
+  --paper: #f4ede0;
+  --paper-alt: #efe6d4;
+  --paper-edge: #e2d6bc;
+  --rule: #b7c6cc;
+  --margin: #b6564c;
+  --ink: #2e2a22;
+  --ink-soft: #5c5645;
+  --teal: #2f5d62;
+  --rust: #a63d2f;
+  --gold: #b98a2e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--desk);
+  background-image: repeating-linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.015) 0px,
+      rgba(0, 0, 0, 0.015) 2px,
+      transparent 2px,
+      transparent 8px
+    );
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--ink);
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+}
+
+.register-book {
+  position: relative;
+  width: min(680px, 100%);
+  background: var(--paper);
+  border: 1px solid var(--paper-edge);
+  box-shadow: 12px 16px 0 rgba(46, 42, 34, 0.08), 0 2px 6px rgba(46, 42, 34, 0.18);
+  transform: rotate(-0.5deg);
+  padding: 30px 30px 22px;
+}
+
+.register-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.register-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.register-heading {
+  margin: 0;
+  font-family: 'Source Serif 4', serif;
+  font-weight: 600;
+  font-size: 1.7rem;
+  color: var(--ink);
+}
+
+.register-subheading {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.register-count {
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--teal);
+  border: 1px dashed var(--teal);
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.register-thread {
+  height: 10px;
+  margin: 16px 0 10px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--rust) 0,
+    var(--rust) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+  background-position: center;
+  background-repeat: repeat-x;
+  background-size: 16px 2px;
+  opacity: 0.55;
+}
+
+.register-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.register-table thead th {
+  text-align: left;
+  font-family: 'Source Serif 4', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--teal);
+  font-size: 0.85rem;
+  border-bottom: 2px solid var(--margin);
+  padding: 6px 10px 10px;
+}
+
+.register-row {
+  border-bottom: 1px solid var(--rule);
+}
+
+.register-row:nth-child(odd) {
+  background: var(--paper-alt);
+}
+
+.register-row:hover {
+  background: rgba(185, 138, 46, 0.12);
+}
+
+.cell {
+  padding: 10px 10px;
+  vertical-align: middle;
+  border-left: 1px solid var(--rule);
+}
+
+.cell:first-child {
+  border-left: none;
+}
+
+.cell-serial {
+  width: 52px;
+}
+
+.cell-roll {
+  width: 150px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.cell-course {
+  width: 42%;
+  color: var(--ink-soft);
+}
+
+.cell-name {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.serial-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--rust);
+  color: var(--rust);
+  font-size: 0.72rem;
+  font-weight: 600;
+  transform: rotate(-4deg);
+}
+
+.register-footer {
+  margin-top: 18px;
+  text-align: right;
+  font-size: 0.68rem;
+  font-style: italic;
+  font-family: 'Source Serif 4', serif;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 640px) {
+  .register-book {
+    padding: 22px 16px 18px;
+  }
+
+  .register-table {
+    font-size: 0.75rem;
+  }
+
+  .cell {
+    padding: 8px 6px;
+  }
+
+  .cell-course {
+    width: auto;
+  }
+
+  .register-heading {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-table thead {
+    display: none;
+  }
+
+  .register-table,
+  .register-table tbody,
+  .register-row {
+    display: block;
+    width: 100%;
+  }
+
+  .register-row {
+    padding: 10px 0;
+  }
+
+  .cell {
+    display: flex;
+    justify-content: space-between;
+    border-left: none;
+    padding: 3px 4px;
+  }
+
+  .cell::before {
+    content: attr(data-label);
+    font-size: 0.65rem;
+    color: var(--teal);
+    font-style: italic;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  .cell-serial {
+    width: auto;
+  }
+}

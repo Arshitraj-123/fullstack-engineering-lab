@@ -1,0 +1,390 @@
+:root {
+  --office: #aab4ad;
+  --office-dark: #8f9a92;
+  --panel: #f2ede0;
+  --panel-line: #d9d2bf;
+  --ink: #262a26;
+  --ink-soft: #565f58;
+  --user-clearance: #3b6ea5;
+  --user-clearance-dark: #2a4f78;
+  --admin-clearance: #b8862e;
+  --admin-clearance-dark: #8a6420;
+  --denied: #a3402f;
+  --granted: #3f7a52;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--office);
+  background-image: radial-gradient(circle at 50% -10%, rgba(255, 255, 255, 0.15), transparent 55%);
+  color: var(--ink);
+  font-family: 'Barlow Semi Condensed', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 44px 18px;
+}
+
+.mono {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.counter {
+  width: min(760px, 100%);
+}
+
+.counter-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.counter-header h1 {
+  margin: 0 0 6px;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.counter-header p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.panel-row {
+  display: flex;
+  justify-content: center;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+/* --- Clipboard / intake form ------------------------------------ */
+
+.clipboard {
+  position: relative;
+  width: min(420px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  box-shadow: 0 14px 0 rgba(38, 42, 38, 0.06), 0 4px 10px rgba(38, 42, 38, 0.22);
+  padding: 34px 26px 26px;
+}
+
+.clipboard-clip {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92px;
+  height: 26px;
+  background: linear-gradient(180deg, #8b9089, #5c625b);
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.clipboard-clip::after {
+  content: '';
+  position: absolute;
+  inset: 6px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+}
+
+.clipboard-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 20px;
+}
+
+.tab {
+  flex: 1;
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 8px 4px 10px;
+  font-family: 'Barlow Semi Condensed', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab.is-active {
+  color: var(--ink);
+  border-bottom-color: var(--user-clearance);
+}
+
+.intake-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.intake-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.intake-form input {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.9rem;
+  padding: 9px 10px;
+  border: 1px solid var(--panel-line);
+  background: #fffdf7;
+  color: var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+
+.intake-form input:focus {
+  outline: 2px solid var(--user-clearance);
+  outline-offset: 1px;
+}
+
+.field-note {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.btn {
+  font-family: 'Barlow Semi Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 11px 16px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--panel);
+}
+
+.btn-primary:hover {
+  background: #10120f;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  margin-top: 16px;
+}
+
+.btn-ghost:hover {
+  background: rgba(38, 42, 38, 0.08);
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.hint code {
+  font-family: 'IBM Plex Mono', monospace;
+  background: rgba(38, 42, 38, 0.08);
+  padding: 1px 4px;
+}
+
+.stamp-slot {
+  min-height: 20px;
+  margin-top: 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.stamp-slot.denied {
+  color: var(--denied);
+}
+
+.stamp-slot.granted {
+  color: var(--granted);
+}
+
+/* --- Badge -------------------------------------------------------- */
+
+.badge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(360px, 100%);
+}
+
+.badge {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  box-shadow: 0 14px 0 rgba(38, 42, 38, 0.06), 0 4px 10px rgba(38, 42, 38, 0.22);
+  overflow: hidden;
+  transform: rotate(-0.6deg);
+}
+
+.badge-band {
+  background: var(--user-clearance);
+  color: #fff;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+  padding: 7px 0;
+}
+
+.badge.is-admin .badge-band {
+  background: var(--admin-clearance);
+}
+
+.badge-body {
+  display: flex;
+  gap: 14px;
+  padding: 18px 18px 14px;
+}
+
+.badge-photo {
+  flex: none;
+  width: 66px;
+  height: 66px;
+  border: 2px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Semi Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  background: #fffdf7;
+}
+
+.badge-fields {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.badge-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.badge-field {
+  display: block;
+  min-width: 0;
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+}
+
+.field-label {
+  letter-spacing: 0.06em;
+  margin-right: 6px;
+}
+
+.field-value {
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge-barcode {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  height: 30px;
+  padding: 0 18px 14px;
+}
+
+.badge-barcode span {
+  flex: 1;
+  background: var(--ink);
+}
+
+.badge-barcode span:nth-child(3n) {
+  flex: 0.5;
+  background: transparent;
+}
+
+.badge-barcode span:nth-child(5n) {
+  flex: 1.6;
+}
+
+/* --- Roster --------------------------------------------------------- */
+
+.roster {
+  width: min(420px, 100%);
+  margin-left: 24px;
+}
+
+.roster h2 {
+  font-size: 1.1rem;
+  margin: 0 0 2px;
+}
+
+.roster-caption {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.roster table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+}
+
+.roster th {
+  text-align: left;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  border-bottom: 2px solid var(--ink);
+  padding: 7px 8px;
+}
+
+.roster td {
+  padding: 8px;
+  font-size: 0.78rem;
+  border-bottom: 1px solid var(--panel-line);
+}
+
+.roster td.clearance-admin {
+  color: var(--admin-clearance-dark);
+  font-weight: 600;
+}
+
+.roster td.clearance-user {
+  color: var(--user-clearance-dark);
+  font-weight: 600;
+}
+
+@media (max-width: 760px) {
+  #badge-view {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .roster {
+    margin-left: 0;
+  }
+}

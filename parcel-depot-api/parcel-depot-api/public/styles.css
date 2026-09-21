@@ -1,0 +1,346 @@
+:root {
+  --floor: #5c6670;
+  --floor-dark: #454d55;
+  --kraft: #cfa96e;
+  --kraft-dark: #a8813f;
+  --kraft-shadow: #8a692f;
+  --ink: #2b241c;
+  --ink-soft: #5a5142;
+  --stamp-red: #a13f2e;
+  --hazard-yellow: #e8b93d;
+  --hazard-black: #23201a;
+  --panel: #eee7d6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--floor);
+  background-image: radial-gradient(circle at 50% -10%, rgba(255, 255, 255, 0.08), transparent 55%);
+  color: var(--ink);
+  font-family: 'Oswald', sans-serif;
+  min-height: 100vh;
+  padding: 44px 18px 70px;
+}
+
+.mono {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.dock {
+  width: min(880px, 100%);
+  margin: 0 auto;
+}
+
+.dock-header {
+  text-align: center;
+  margin-bottom: 26px;
+  color: #f3efe3;
+}
+
+.dock-header h1 {
+  margin: 0 0 6px;
+  font-size: 2.3rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.dock-header p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #d7d2c6;
+}
+
+/* --- Dropzone -------------------------------------------------- */
+
+.dropzone {
+  position: relative;
+  border: 3px solid var(--hazard-black);
+  background: var(--panel);
+  padding: 40px 24px 34px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.08s ease;
+}
+
+.dropzone::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--hazard-yellow) 0 12px,
+    var(--hazard-black) 12px 24px
+  );
+}
+
+.dropzone.is-dragover {
+  transform: scale(1.01);
+}
+
+.dropzone-title {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.dropzone-note {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* --- Conveyor progress bar --------------------------------------- */
+
+.conveyor {
+  position: relative;
+  height: 22px;
+  margin-top: 16px;
+  overflow: hidden;
+  background: var(--hazard-black);
+  border: 1px solid #000;
+}
+
+.conveyor-fill {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--hazard-yellow) 0 14px,
+    transparent 14px 28px
+  );
+  background-size: 40px 40px;
+  animation: conveyor-move 0.6s linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes conveyor-move {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 40px 0;
+  }
+}
+
+.conveyor-label {
+  position: relative;
+  z-index: 1;
+  display: block;
+  text-align: center;
+  font-size: 0.68rem;
+  line-height: 22px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+/* --- Reject slip -------------------------------------------------- */
+
+.reject-slip {
+  margin-top: 14px;
+  background: var(--panel);
+  border-left: 5px solid var(--stamp-red);
+  padding: 10px 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--stamp-red);
+}
+
+/* --- Manifest ------------------------------------------------------ */
+
+.manifest {
+  margin-top: 34px;
+}
+
+.manifest-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: #f3efe3;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+  padding-bottom: 8px;
+  margin-bottom: 18px;
+}
+
+.manifest-header h2 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.manifest-summary {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  color: #d7d2c6;
+}
+
+.manifest-empty {
+  color: #d7d2c6;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.manifest-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+/* --- Parcel tag ----------------------------------------------------- */
+
+.parcel {
+  position: relative;
+  width: 200px;
+  background: var(--kraft);
+  border: 1px solid var(--kraft-dark);
+  box-shadow: 3px 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px 14px 14px;
+  color: var(--ink);
+  transform: rotate(-1.2deg);
+}
+
+.parcel:nth-child(3n + 1) {
+  transform: rotate(-1.4deg);
+}
+
+.parcel:nth-child(3n + 2) {
+  transform: rotate(0.8deg);
+}
+
+.parcel:nth-child(3n) {
+  transform: rotate(-0.4deg);
+}
+
+.parcel-punch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--floor);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.parcel-stamp {
+  position: absolute;
+  top: 26px;
+  right: 8px;
+  border: 2px solid var(--stamp-red);
+  color: var(--stamp-red);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 5px;
+  transform: rotate(8deg);
+  opacity: 0.85;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.parcel-id {
+  font-size: 0.62rem;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+  padding-right: 52px;
+}
+
+.parcel-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  word-break: break-word;
+  padding-right: 46px;
+}
+
+.parcel-meta {
+  font-size: 0.66rem;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+
+.parcel-barcode {
+  display: flex;
+  gap: 1px;
+  height: 20px;
+  margin-bottom: 12px;
+}
+
+.parcel-barcode span {
+  flex: 1;
+  background: var(--ink);
+}
+
+.parcel-barcode span:nth-child(3n) {
+  flex: 0.5;
+  background: transparent;
+}
+
+.parcel-barcode span:nth-child(4n) {
+  flex: 1.6;
+}
+
+.parcel-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  flex: 1;
+  text-align: center;
+  border: none;
+  padding: 7px 0;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-claim {
+  background: var(--ink);
+  color: var(--kraft);
+}
+
+.btn-claim:hover {
+  background: #10120f;
+}
+
+.btn-discard {
+  background: transparent;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+}
+
+.btn-discard:hover {
+  background: rgba(43, 36, 28, 0.12);
+}
+
+@media (max-width: 480px) {
+  .dock-header h1 {
+    font-size: 1.9rem;
+  }
+
+  .parcel {
+    width: 100%;
+  }
+}

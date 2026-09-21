@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quality Control &mdash; Inspection Station</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="station">
+      <header class="station-header">
+        <h1>Inspection Station</h1>
+        <p>Every work order is checked against the schema before it reaches inventory.</p>
+      </header>
+
+      <div class="station-grid">
+        <!-- Intake form -->
+        <section class="intake">
+          <h2>New work order</h2>
+          <form id="product-form" class="intake-form">
+            <label>
+              Product name
+              <input type="text" name="name" placeholder="Wireless Mouse" />
+            </label>
+            <label>
+              SKU <span class="field-hint">ABC-1234</span>
+              <input type="text" name="sku" placeholder="ELE-1001" class="mono" />
+            </label>
+            <div class="field-row">
+              <label>
+                Price (USD)
+                <input type="text" name="price" placeholder="19.99" class="mono" />
+              </label>
+              <label>
+                Quantity
+                <input type="text" name="quantity" placeholder="100" class="mono" />
+              </label>
+            </div>
+            <label>
+              Category
+              <select name="category">
+                <option value="">-- select --</option>
+                <option>Electronics</option>
+                <option>Apparel</option>
+                <option>Grocery</option>
+                <option>Toys</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label>
+              Contact email
+              <input type="text" name="contactEmail" placeholder="ops@example.com" class="mono" />
+            </label>
+            <button type="submit" class="btn btn-primary">Submit for inspection</button>
+          </form>
+        </section>
+
+        <!-- Test rig -->
+        <section class="test-rig">
+          <h2>Test rig</h2>
+          <p class="test-rig-note">Fire a known-bad request straight at the API to see how each failure mode is handled.</p>
+          <div class="test-rig-buttons">
+            <button type="button" class="btn btn-rig" data-test="missing-fields">Missing fields</button>
+            <button type="button" class="btn btn-rig" data-test="bad-formats">Bad formats</button>
+            <button type="button" class="btn btn-rig" data-test="duplicate-sku">Duplicate SKU</button>
+            <button type="button" class="btn btn-rig" data-test="not-found">Unknown ID (404)</button>
+            <button type="button" class="btn btn-rig" data-test="wrong-content-type">Wrong Content-Type</button>
+            <button type="button" class="btn btn-rig" data-test="malformed-json">Malformed JSON</button>
+            <button type="button" class="btn btn-rig" data-test="server-error">Simulated 500</button>
+          </div>
+
+          <div id="report" class="report">
+            <p class="report-placeholder">Submit a work order, or fire a test above &mdash; the inspection report appears here.</p>
+          </div>
+        </section>
+      </div>
+
+      <section class="ledger">
+        <div class="ledger-header">
+          <h2>Inventory ledger</h2>
+          <span id="ledger-summary" class="ledger-summary mono">0 items</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="ledger-body"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

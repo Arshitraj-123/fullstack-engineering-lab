@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>library-catalog-api(1)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <main class="manual">
+      <header class="manual-topbar">
+        <span>LIBRARY-CATALOG-API(1)</span>
+        <span>General Commands Manual</span>
+        <span>LIBRARY-CATALOG-API(1)</span>
+      </header>
+
+      <section>
+        <h2>NAME</h2>
+        <p><span class="cmd">library-catalog-api</span> &mdash; a small RESTful API for managing a library's book catalog</p>
+      </section>
+
+      <section>
+        <h2>SYNOPSIS</h2>
+        <pre class="block">npm install
+npm start
+&nbsp;
+<span class="dim"># server starts on</span> http://localhost:3000</pre>
+      </section>
+
+      <section>
+        <h2>DESCRIPTION</h2>
+        <p>
+          This service exposes CRUD operations over a collection of <span class="cmd">books</span>,
+          plus two small workflow actions (<span class="cmd">checkout</span> / <span class="cmd">return</span>)
+          layered on top of the plain REST verbs. Data lives in memory for this
+          demo and reseeds on every restart.
+        </p>
+        <p>
+          All responses are JSON. Successful responses are shaped as
+          <span class="cmd">{ "data": ... }</span> (list endpoints add a
+          <span class="cmd">count</span>); errors are shaped as
+          <span class="cmd">{ "error": { "message": ... } }</span>.
+        </p>
+      </section>
+
+      <section>
+        <h2>ENDPOINTS</h2>
+        <table class="endpoint-table">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Path</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="verb verb-get">GET</span></td>
+              <td>/api/books</td>
+              <td>List books. Optional <span class="cmd">?author=</span> and <span class="cmd">?available=</span> filters.</td>
+            </tr>
+            <tr>
+              <td><span class="verb verb-get">GET</span></td>
+              <td>/api/books/:id</td>
+              <td>Fetch a single book by id.</td>
+            </tr>
+            <tr>
+              <td><span class="verb verb-post">POST</span></td>
+              <td>/api/books</td>
+              <td>Create a book. Requires title, author, isbn, publishedYear.</td>
+            </tr>
+            <tr>
+              <td><span class="verb verb-put">PUT</span></td>
+              <td>/api/books/:id</td>
+              <td>Replace a book's fields entirely.</td>
+            </tr>
+            <tr>
+              <td><span class="verb verb-patch">PATCH</span></td>
+              <td>/api/books/:id</td>
+              <td>Update one or more fields.</td>
+            </tr>
+            <tr>
+              <td><span class="verb verb-delete">DELETE</span></td>
+              <td>/api/books/:id</td>
+              <td>Remove a book from the catalog.</td>
+            </tr>
+            <tr>
+              <td><span class="verb verb-post">POST</span></td>
+              <td>/api/books/:id/checkout</td>
+              <td>Mark a book unavailable. 400 if already checked out.</td>
+            </tr>
+            <tr>
+              <td><span class="verb verb-post">POST</span></td>
+              <td>/api/books/:id/return</td>
+              <td>Mark a book available again.</td>
+            </tr>
+            <tr>
+              <td><span class="verb verb-get">GET</span></td>
+              <td>/api/health</td>
+              <td>Liveness check.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>EXAMPLES</h2>
+        <p class="dim">List every available book by Fowler:</p>
+        <pre class="block">curl "http://localhost:3000/api/books?author=Fowler&amp;available=true"</pre>
+
+        <p class="dim">Add a new book:</p>
+        <pre class="block">curl -X POST http://localhost:3000/api/books \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Refactoring",
+    "author": "Martin Fowler",
+    "isbn": "9780134757599",
+    "publishedYear": 2018
+  }'</pre>
+
+        <p class="dim">Check a book out, then return it:</p>
+        <pre class="block">curl -X POST http://localhost:3000/api/books/&lt;id&gt;/checkout
+curl -X POST http://localhost:3000/api/books/&lt;id&gt;/return</pre>
+      </section>
+
+      <section>
+        <h2>EXIT STATUS</h2>
+        <table class="status-table">
+          <tbody>
+            <tr><td>200</td><td>OK &mdash; request succeeded</td></tr>
+            <tr><td>201</td><td>Created &mdash; a new book was written</td></tr>
+            <tr><td>204</td><td>No Content &mdash; deletion succeeded</td></tr>
+            <tr><td>400</td><td>Bad Request &mdash; validation failed, see error.details</td></tr>
+            <tr><td>404</td><td>Not Found &mdash; no book, or no route, matched</td></tr>
+            <tr><td>500</td><td>Internal Server Error &mdash; unexpected failure</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>FILES</h2>
+        <pre class="block">server.js                    <span class="dim"># entry point</span>
+src/app.js                   <span class="dim"># express app assembly</span>
+src/routes/books.routes.js   <span class="dim"># route -&gt; controller wiring</span>
+src/controllers/             <span class="dim"># request handlers</span>
+src/data/booksStore.js       <span class="dim"># in-memory data store</span>
+src/middleware/               <span class="dim"># 404 + error handler</span>
+tests/books.test.js          <span class="dim"># jest + supertest suite</span></pre>
+      </section>
+
+      <footer class="manual-footer">
+        <span>Backend Development Lab &middot; CA3540</span>
+        <span>library-catalog-api 1.0.0</span>
+      </footer>
+    </main>
+  </body>
+</html>
