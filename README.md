@@ -1,5 +1,12 @@
 # Full-Stack Engineering Lab 🧪
 
+<p align="center">
+  <a href="https://github.com/Arshitraj-123/fullstack-engineering-lab/actions"><img src="https://github.com/Arshitraj-123/fullstack-engineering-lab/actions/workflows/test.yml/badge.svg" alt="CI Status" /></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
+  <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-18.x%20%7C%2020.x-339933?logo=node.js&logoColor=white" alt="Node.js" /></a>
+  <a href="https://github.com/Arshitraj-123/fullstack-engineering-lab/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
+</p>
+
 A comprehensive monorepo of **10 specialized, practical engineering projects** spanning production-grade backend distributed systems, RESTful microservices, event-driven architectures, and interactive React frontend applications.
 
 Every project in this laboratory is built around a distinct, real-world industrial or tactile simulation theme—pairing robust software patterns with interactive interfaces for testing and demonstration.
